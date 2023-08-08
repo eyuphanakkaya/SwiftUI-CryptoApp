@@ -208,11 +208,11 @@ import Foundation
     ]
  }
 }*/
-struct CoinModel: Identifiable, Codable {
+struct CoinModel: Identifiable, Codable,Hashable {
     let id, symbol, name: String?
     let image: String?
     let current_price: Double
-    let market_cap, market_cap_rank: Double?
+    let market_cap, market_cap_rank: Int?
     let fully_diluted_valuation, total_volume: Double?
     let high_24h: Double?
     let low_24h: Double?
@@ -231,39 +231,16 @@ struct CoinModel: Identifiable, Codable {
     let atl_date: String?
     let last_updated: String?
     let sparkline_in_7d: SparklineIn7D?
-    
-//    enum CodingKeys: String, CodingKey {
-//        case id, symbol, name, image
-//        case currentPrice = "current_price"
-//        case marketCap = "market_cap"
-//        case marketCapRank = "market_cap_rank"
-//        case fullyDilutedValuation = "fully_diluted_valuation"
-//        case totalVolume = "total_volume"
-//        case high24H = "high_24h"
-//        case low24H = "low_24h"
-//        case priceChange24H = "price_change_24h"
-//        case priceChangePercentage24H = "price_change_percentage_24h"
-//        case marketCapChange24H = "market_cap_change_24h"
-//        case marketCapChangePercentage24H = "market_cap_change_percentage_24h"
-//        case circulatingSupply = "circulating_supply"
-//        case totalSupply = "total_supply"
-//        case maxSupply = "max_supply"
-//        case ath = "ath"
-//        case athChangePercentage = "ath_change_percentage"
-//        case athDate = "ath_date"
-//        case atl = "atl"
-//        case atlChangePercentage = "atl_change_percentage"
-//        case atlDate = "atl_date"
-//        case lastUpdated = "last_updated"
-//        case sparklineIn7D = "sparkline_in_7d" // Düzeltildi
-//    }
+
 }
 
-struct SparklineIn7D: Codable {
+struct SparklineIn7D: Codable,Hashable {
     var price: [Double]?
 }
 
-struct CoinResult: Codable {
+struct CoinResult: Codable,Hashable {
     var coinResult: [CoinModel]?
 }
+
+
 

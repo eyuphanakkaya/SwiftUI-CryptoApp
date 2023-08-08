@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A415C58B2A822F8100E22DF7 /* MarketPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A415C58A2A822F8100E22DF7 /* MarketPage.swift */; };
+		A415C58D2A82300B00E22DF7 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A415C58C2A82300B00E22DF7 /* ProfilePage.swift */; };
+		A415C5902A8231A400E22DF7 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = A415C58F2A8231A400E22DF7 /* Double.swift */; };
+		A415C5922A823B2600E22DF7 /* LineGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A415C5912A823B2600E22DF7 /* LineGraph.swift */; };
+		A45C429E2A8256A7006430CB /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = A45C429D2A8256A7006430CB /* Lottie */; };
+		A45C42A12A8256C5006430CB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A45C42A02A8256C5006430CB /* Kingfisher */; };
+		A45C42A32A825731006430CB /* HomePageDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45C42A22A825731006430CB /* HomePageDesign.swift */; };
 		A4A0FED12A80E8A9001E6290 /* CryptoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A0FED02A80E8A9001E6290 /* CryptoApp.swift */; };
 		A4A0FED32A80E8A9001E6290 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A0FED22A80E8A9001E6290 /* ContentView.swift */; };
 		A4A0FED52A80E8A9001E6290 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4A0FED42A80E8A9001E6290 /* Assets.xcassets */; };
@@ -17,6 +24,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A415C58A2A822F8100E22DF7 /* MarketPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPage.swift; sourceTree = "<group>"; };
+		A415C58C2A82300B00E22DF7 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
+		A415C58F2A8231A400E22DF7 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		A415C5912A823B2600E22DF7 /* LineGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineGraph.swift; sourceTree = "<group>"; };
+		A45C42A22A825731006430CB /* HomePageDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDesign.swift; sourceTree = "<group>"; };
+		A45C42A42A8259A1006430CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A4A0FECD2A80E8A9001E6290 /* CryptoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4A0FED02A80E8A9001E6290 /* CryptoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoApp.swift; sourceTree = "<group>"; };
 		A4A0FED22A80E8A9001E6290 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -32,12 +45,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A45C42A12A8256C5006430CB /* Kingfisher in Frameworks */,
+				A45C429E2A8256A7006430CB /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A415C58E2A82318D00E22DF7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A415C58F2A8231A400E22DF7 /* Double.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		A4A0FEC42A80E8A9001E6290 = {
 			isa = PBXGroup;
 			children = (
@@ -57,6 +80,8 @@
 		A4A0FECF2A80E8A9001E6290 /* CryptoApp */ = {
 			isa = PBXGroup;
 			children = (
+				A45C42A42A8259A1006430CB /* Info.plist */,
+				A415C58E2A82318D00E22DF7 /* Extensions */,
 				A4A0FEE12A80E8ED001E6290 /* Model */,
 				A4A0FEE02A80E8E9001E6290 /* View */,
 				A4A0FEDF2A80E8C7001E6290 /* ViewModel */,
@@ -97,6 +122,9 @@
 				A4A0FED02A80E8A9001E6290 /* CryptoApp.swift */,
 				A4A0FED22A80E8A9001E6290 /* ContentView.swift */,
 				A4A0FEE62A810C03001E6290 /* HomePage.swift */,
+				A415C58A2A822F8100E22DF7 /* MarketPage.swift */,
+				A415C58C2A82300B00E22DF7 /* ProfilePage.swift */,
+				A415C5912A823B2600E22DF7 /* LineGraph.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -112,6 +140,7 @@
 		A4A0FEE82A8117B6001E6290 /* SubView */ = {
 			isa = PBXGroup;
 			children = (
+				A45C42A22A825731006430CB /* HomePageDesign.swift */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -132,6 +161,10 @@
 			dependencies = (
 			);
 			name = CryptoApp;
+			packageProductDependencies = (
+				A45C429D2A8256A7006430CB /* Lottie */,
+				A45C42A02A8256C5006430CB /* Kingfisher */,
+			);
 			productName = CryptoApp;
 			productReference = A4A0FECD2A80E8A9001E6290 /* CryptoApp.app */;
 			productType = "com.apple.product-type.application";
@@ -160,6 +193,10 @@
 				Base,
 			);
 			mainGroup = A4A0FEC42A80E8A9001E6290;
+			packageReferences = (
+				A45C429C2A8256A7006430CB /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				A45C429F2A8256C5006430CB /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = A4A0FECE2A80E8A9001E6290 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -188,8 +225,13 @@
 			files = (
 				A4A0FEE72A810C03001E6290 /* HomePage.swift in Sources */,
 				A4A0FED32A80E8A9001E6290 /* ContentView.swift in Sources */,
+				A415C5902A8231A400E22DF7 /* Double.swift in Sources */,
 				A4A0FEE52A80F1A6001E6290 /* CryptoViewModel.swift in Sources */,
+				A415C58D2A82300B00E22DF7 /* ProfilePage.swift in Sources */,
+				A45C42A32A825731006430CB /* HomePageDesign.swift in Sources */,
 				A4A0FEE32A80E905001E6290 /* CoinModel.swift in Sources */,
+				A415C58B2A822F8100E22DF7 /* MarketPage.swift in Sources */,
+				A415C5922A823B2600E22DF7 /* LineGraph.swift in Sources */,
 				A4A0FED12A80E8A9001E6290 /* CryptoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,6 +364,7 @@
 				DEVELOPMENT_TEAM = NF9R7KNMC7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CryptoApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -351,6 +394,7 @@
 				DEVELOPMENT_TEAM = NF9R7KNMC7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CryptoApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -391,6 +435,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A45C429C2A8256A7006430CB /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+		A45C429F2A8256C5006430CB /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A45C429D2A8256A7006430CB /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A45C429C2A8256A7006430CB /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		A45C42A02A8256C5006430CB /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A45C429F2A8256C5006430CB /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A4A0FEC52A80E8A9001E6290 /* Project object */;
 }

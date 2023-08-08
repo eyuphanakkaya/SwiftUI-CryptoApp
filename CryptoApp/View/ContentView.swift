@@ -8,13 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var viewModel = CryptoViewModel()
     var body: some View {
         ZStack {
             TabView {
-                HomePage()
+                HomePage(viewModel: viewModel)
                     .tabItem {
                         Image(systemName: "homekit")
-                        Text("Anasayfa")
+                    }
+                MarketPage(viewModel: viewModel)
+                    .tabItem {
+                       Image(systemName: "basket")
+                    }
+                ProfilePage()
+                    .tabItem {
+                        Image(systemName: "person")
                     }
             }
         }

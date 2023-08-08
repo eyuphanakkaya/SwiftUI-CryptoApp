@@ -6,41 +6,93 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct HomePage: View {
-    @ObservedObject var viewModel = CryptoViewModel()
+    @ObservedObject var viewModel: CryptoViewModel
+    @State var coinList = [CoinModel]()
+    @State var money = 25000.0
     var body: some View {
         NavigationView{
            
             VStack{
+                ZStack {
+                    VStack(alignment: .leading) {
+                        Text("Total Portfolio")
+                            .frame(width: 115,height: 20)
+                            .font(.system(size: 16))
+                            .foregroundColor(.white)
+                        Text("$56.98")
+                            .frame(width: 115,height: 40)
+                            .font(.system(size: 32))
+                            .foregroundColor(.white)
+                            .bold()
+                    }
+                    .padding(.leading,-150)
+                    
+                
+                ZStack {
+                    Rectangle()
+                        .foregroundColor(Color(.gray))
+                        .frame(width: 75,height: 32)
+                        .cornerRadius(8)
+                    Text("+15.3%")
+                        .font(.system(size: 10))
+                        .frame(width: 40,height: 15)
+                        .foregroundColor(.white)
+                }
+                .offset(x:120)
+                    
+                }
+                .frame(width: 345,height: 112)
+                .cornerRadius(12)
+                .background(.gray)
+                .cornerRadius(20)
+                .padding(.top,20)
+               
                 ScrollView(.horizontal){
                     HStack {
                         ZStack{
                             Image("background")
-                            .frame(width: 320,height: 180)
+                            .frame(width: 191,height: 120)
                             .cornerRadius(24)
+                            VStack {
                                 HStack{
-                                    VStack {
-                                        Text("$49,349.77")
-                                            .font(.system(size: 28))
-                                            .bold()
-                                            .foregroundColor(.white)
-                                            .offset(y: -30)
-                                            .padding()
-                                        Text("Your balance is equivalet")
-                                            .offset(y: -40)
-                                            .foregroundColor(.white)
-                                            .padding(.leading,20)
-                                        
-
-                                    }
-                                   
-                                    Spacer()
                                     Image("bitcoin")
-                                        .offset(y: -50)
-                                        .padding()
-                                
+                                        .resizable()
+                                        .frame(width: 40,height: 40)
+                                    VStack(alignment: .leading) {
+                                        Text("BTC")
+                                        Text("Bitcoin")
+                                    }
+                                    ZStack {
+                                        Rectangle()
+                                            .foregroundColor(Color(.gray))
+                                            .frame(width: 55,height: 22)
+                                            .cornerRadius(8)
+                                        Text("+15.3%")
+                                            .font(.system(size: 10))
+                                            .foregroundColor(.white)
+                                    }
+                                    
+                                }
+                                Rectangle()
+                                    .frame(width: 159,height: 1)
+                                    .foregroundColor(.gray)
+                                HStack {
+                                    Text("$26.46")
+                                        .frame(width: 50,height: 18)
+                                        .font(.system(size: 14))
+                                        .padding(.leading,10)
+                                    Spacer()
+                                    Text("0.0012BTC")
+                                        .frame(width: 55,height: 12)
+                                        .font(.system(size: 10))
+                                        .padding(.trailing,10)
+                                }
                             }
+                          
+                            
                            
                         }
 
@@ -62,29 +114,8 @@ struct HomePage: View {
 
                 }
                 ScrollView{
-                    VStack {
-                        HStack {
-                            Image("btc")
-                                .resizable()
-                                .frame(width: 56,height: 56)
-                            VStack {
-                                Text("BTC")
-                                Text("+1.6%")
-                                    .foregroundColor(.gray)
-                            }
-                            Image("grafik")
-                                .resizable()
-                                .frame(width: 84,height: 37)
-                            VStack {
-                                Text("$29.850.15")
-                                    .frame(width: 91,height: 24)
-                                    .font(.system(size: 17))
-                                Text("2.73 BTC")
-                                    .foregroundColor(.gray)
-                                    .frame(width: 70,height: 20)
-                            }
-                          
-                        }
+                    ForEach(coinList.prefix(4)) { list in
+                        HomePageDesign(coin: list)
                     }
                 }
             }
@@ -96,15 +127,18 @@ struct HomePage: View {
                 }
             }
         }
-
         .onAppear{
-            viewModel.fetchCoinList()
+            viewModel.fetchCoinList { result in
+                
+                self.coinList.append(contentsOf: result)
+            }
+            
         }
     }
 }
 
 struct HomePage_Previews: PreviewProvider {
     static var previews: some View {
-        HomePage()
+        HomePage(viewModel: CryptoViewModel())
     }
 }
