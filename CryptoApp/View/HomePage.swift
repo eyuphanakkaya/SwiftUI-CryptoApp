@@ -33,20 +33,20 @@ struct HomePage: View {
                 
                 ZStack {
                     Rectangle()
-                        .foregroundColor(Color(.gray))
+                        .foregroundColor(Color(.white))
                         .frame(width: 75,height: 32)
                         .cornerRadius(8)
                     Text("+15.3%")
                         .font(.system(size: 10))
                         .frame(width: 40,height: 15)
-                        .foregroundColor(.white)
+                        .foregroundColor(Color("iconColors"))
                 }
                 .offset(x:120)
                     
                 }
                 .frame(width: 345,height: 112)
                 .cornerRadius(12)
-                .background(.gray)
+                .background(Color("iconColors"))
                 .cornerRadius(20)
                 .padding(.top,20)
                
@@ -109,15 +109,18 @@ struct HomePage: View {
                     } label: {
                         Text("See All")
                             .padding()
-                            .foregroundColor(.red)
+                            .foregroundColor(Color("iconColors"))
                     }
+                }
 
-                }
                 ScrollView{
-                    ForEach(coinList.prefix(4)) { list in
-                        HomePageDesign(coin: list)
+                        ForEach(coinList.prefix(4)) { list in
+                            NavigationLink(destination: DetailPage(viewModel: viewModel,coin: list, coinList: coinList)) {
+                                HomePageDesign(coin: list)
+                            }
+                        }
                     }
-                }
+                
             }
 
             .navigationTitle("Portfolio")
@@ -126,10 +129,10 @@ struct HomePage: View {
                     Image(systemName: "heart")
                 }
             }
+            .background(Color("background"))
         }
         .onAppear{
             viewModel.fetchCoinList { result in
-                
                 self.coinList.append(contentsOf: result)
             }
             

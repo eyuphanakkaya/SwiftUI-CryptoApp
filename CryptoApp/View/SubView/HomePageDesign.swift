@@ -17,6 +17,7 @@ struct HomePageDesign: View {
                     KFImage(URL(string: resim ))
                         .resizable()
                         .frame(width: 56, height: 56)
+
                 }
 
                 VStack {
@@ -48,7 +49,12 @@ struct HomePageDesign: View {
                 }
               
             }
+          
         }
+        .padding()
+        .frame(width: 343,height: 88)
+        .background(.white)
+        .cornerRadius(10)
 
         
     }

@@ -9,65 +9,98 @@ import SwiftUI
 import Charts
 
 struct MarketPage: View {
-    @State var coinList = [CoinModel]()
     @State var search = ""
+    @State var searchList = [CoinModel]()
+    @State var coin: CoinModel?
     @State var selectedItem = true
+    var searchResult: [CoinModel] {
+        return searchList.filter{$0.symbol!.localizedCaseInsensitiveContains(search)}
+    }
     @ObservedObject var viewModel: CryptoViewModel
     
     var body: some View {
-        NavigationStack {
-            VStack{
-                ScrollView {
-                    HStack {
-
-                            Button {
-                                withAnimation {
-                                    selectedItem = true
-                                }
-                              
-                                print("Hepsi")
-                            } label: {
-                               
-                                Text("All")
-                                    .foregroundColor(.black)
-                            }
-                            .frame(width: 80)
-                            .border(.gray)
-                            .background(selectedItem ? Color.gray : Color.clear)
-                            .cornerRadius(15)
-                            .padding(.leading,10)
-                            
-                        
-                            Button {
-                                withAnimation {
-                                    selectedItem = false
-                                }
-                                print("Favoriler")
-                            } label: {
-                                Text("Favorites")
-                                    .foregroundColor(.black)
-                            }
-                            .frame(width: 100)
-                            .background(selectedItem ? Color.clear : Color.gray )
-                            .border(.gray)
-                            .cornerRadius(15)
-                            .padding(.leading,10)
+        VStack {
+            HStack {
+                    Button {
+                        withAnimation {
+                            selectedItem = true
+                        }
+                        print("Hepsi")
+                    } label: {
+                       
+                        Text("All")
+                            .foregroundColor(selectedItem ? Color.white : Color("iconColors"))
                     }
-                    
-                }
-                ScrollView{
-                    ForEach(coinList) { list in
-                        HomePageDesign(coin: list)
+                    .frame(width: 80,height: 30)
+                    .border(.gray)
+                    .background(selectedItem ?  Color("iconColors") : Color.clear)
+                    .cornerRadius(5)
+                    .padding(.leading,10)
+                
+                    Button {
+                        withAnimation {
+                            selectedItem = false
+                        }
+                        print("Favoriler")
+                    } label: {
+                        Text("Favorites")
+                            .foregroundColor(selectedItem ? Color("iconColors") : Color.white)
                     }
-                }
-                .frame(width: 200)
+                    .frame(width: 100,height: 30)
+                    .background(selectedItem ? Color.clear : Color("iconColors") )
+                    .border(.gray)
+                    .cornerRadius(5)
+                    .padding(.leading,10)
             }
-        }.onAppear{
-            viewModel.fetchCoinList { result in
-                self.coinList.append(contentsOf: result)
+            NavigationStack {
+                if search.isEmpty {
+                    VStack{
+                        ScrollView{
+                            ForEach(viewModel.myList) { list in
+                                NavigationLink(destination: DetailPage(viewModel: viewModel,coin: list)) {
+                                    HomePageDesign(coin: list)
+                                }
+                             
+                            }
+                        }
+                        .frame(width: 345,height: 550)
+                        .padding()
+                        
+                    }
+                    .background(Color("background"))
+                } else if !search.isEmpty{
+                    VStack{
+                        ScrollView{
+                            ForEach(searchResult) { list in
+                                NavigationLink(destination: DetailPage(viewModel: viewModel,coin: list)) {
+                                    HomePageDesign(coin: list)
+                                }
+                             
+                            }
+                        }
+                        .frame(width: 345,height: 550)
+                        .padding()
+                        
+                    }
+                    .background(Color("background"))
+                }
+
+            }
+            .searchable(text: $search)
+            .onChange(of: search, perform: { newSearch in
+                    viewModel.fetchSearchList(search: newSearch) { result in
+                        print(result)
+                        self.searchList.append(contentsOf: result)
+                    }
+                })
+            .onAppear{
+                viewModel.fetchAllCoin()
+              
             }
         }
-        .searchable(text: $search)
+
+
+       
 
     }
 
