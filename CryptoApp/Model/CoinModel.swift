@@ -208,6 +208,15 @@ import Foundation
     ]
  }
 }*/
+struct CoinSearch: Codable,Hashable,Identifiable {
+    let id: String?
+    let name: String?
+    let symbol: String?
+    let thumb: String?
+}
+struct CoinSearchResult : Codable,Hashable {
+    var coins: [CoinSearch]?
+}
 struct CoinModel: Identifiable, Codable,Hashable {
     let id, symbol, name: String?
     let image: String?

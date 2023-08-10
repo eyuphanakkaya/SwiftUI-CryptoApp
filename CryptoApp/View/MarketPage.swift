@@ -10,11 +10,11 @@ import Charts
 
 struct MarketPage: View {
     @State var search = ""
-    @State var searchList = [CoinModel]()
-    @State var coin: CoinModel?
+    @State var searchList = [CoinSearch]()
+    @State var coin: CoinSearch?
     @State var selectedItem = true
-    var searchResult: [CoinModel] {
-        return searchList.filter{$0.symbol!.localizedCaseInsensitiveContains(search)}
+    var searchResult: [CoinSearch] {
+        return searchList.filter{$0.name!.localizedCaseInsensitiveContains(search)}
     }
     @ObservedObject var viewModel: CryptoViewModel
     
@@ -24,6 +24,7 @@ struct MarketPage: View {
                     Button {
                         withAnimation {
                             selectedItem = true
+                            
                         }
                         print("Hepsi")
                     } label: {
@@ -53,11 +54,11 @@ struct MarketPage: View {
                     .padding(.leading,10)
             }
             NavigationStack {
-                if search.isEmpty {
+                if search.isEmpty && selectedItem == true {
                     VStack{
                         ScrollView{
                             ForEach(viewModel.myList) { list in
-                                NavigationLink(destination: DetailPage(viewModel: viewModel,coin: list)) {
+                                NavigationLink(destination: DetailPage(viewModel: viewModel,coin: list, fav: false)) {
                                     HomePageDesign(coin: list)
                                 }
                              
@@ -68,13 +69,29 @@ struct MarketPage: View {
                         
                     }
                     .background(Color("background"))
-                } else if !search.isEmpty{
+                } else if search.isEmpty && selectedItem == false {
+                    VStack{
+                        ScrollView{
+                            ForEach(viewModel.favorites) { list in
+                                NavigationLink(destination: DetailPage(viewModel: viewModel,coin: list, fav: false)) {
+                                    HomePageDesign(coin: list)
+                                }
+                             
+                            }
+                        }
+                        .frame(width: 345,height: 550)
+                        .padding()
+                        
+                    }
+                    .background(Color("background"))
+                } else {
                     VStack{
                         ScrollView{
                             ForEach(searchResult) { list in
-                                NavigationLink(destination: DetailPage(viewModel: viewModel,coin: list)) {
-                                    HomePageDesign(coin: list)
-                                }
+                                SearchPage(coin: list)
+//                                NavigationLink(destination: DetailPage(viewModel: viewModel,coin: list, fav: false)) {
+//                                   SearchPage(coin: list)
+//                                }
                              
                             }
                         }
@@ -86,13 +103,15 @@ struct MarketPage: View {
                 }
 
             }
-            .searchable(text: $search)
-            .onChange(of: search, perform: { newSearch in
-                    viewModel.fetchSearchList(search: newSearch) { result in
-                        print(result)
-                        self.searchList.append(contentsOf: result)
-                    }
-                })
+            .searchable(text: $search,prompt: "Search Coin")
+            .onChange(of: search) { newSearch in
+                viewModel.fetchSearchCoin(searchCoin: newSearch) { result in
+                    searchList.append(contentsOf: result)
+                    print("yeniii ARAMAAAA =\(newSearch)")
+                    print("sonucccc =\(result)")
+                    print("ARAMAAAA =\(searchList)")
+                }
+            }
             .onAppear{
                 viewModel.fetchAllCoin()
               

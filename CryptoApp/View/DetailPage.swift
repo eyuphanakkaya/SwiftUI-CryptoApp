@@ -13,19 +13,13 @@ struct DetailPage: View {
     @State var coin: CoinModel?
     @State var coinList: [CoinModel]?
     @State private var buyOrSell  = 0
+    @State var fav: Bool
     @State var estimatedValue: Float?
     @State var tradeValue: Float?
     @State var tradeFee: Float?
     var body: some View {
         
         LazyVStack {
-            //            HStack{
-            //                Image(systemName: "heart")
-            //                    .resizable()
-            //                    .frame(width: 50,height: 50)
-            //            }
-            //            .offset(x: 150,y: -100)
-            
             if let image = coin?.image,
                let symbol = coin?.symbol,
                let name = coin?.id,
@@ -53,8 +47,6 @@ struct DetailPage: View {
                         
                     }
                     .frame(width: 90,height: 45)
-                    
-                    
                 }
             }
             
@@ -129,14 +121,44 @@ struct DetailPage: View {
                     .cornerRadius(10)
                 }
                 
-                
-                
             }
             
         }
+        .onAppear{
+            if viewModel.favorites.contains(where: {$0.id ?? "" == coin?.id }) {
+                fav = true
+            } else {
+                fav = false
+            }
+        }
         .toolbar {
             ToolbarItem{
-                Image(systemName: "heart")
+                Button {
+                    if let myCoin = coin {
+                        fav.toggle()
+                        if fav {
+                            viewModel.favorites.append(myCoin)
+                            
+                        } else {
+                            
+                            if let removeCoin = viewModel.favorites.firstIndex(of: myCoin) {
+                                viewModel.favorites.remove(at: removeCoin)
+                                
+                            }
+                        }
+                    }
+                    
+                } label: {
+                    if fav {
+                        Image(systemName: "heart.fill")
+                            .resizable()
+                            .frame(width: 20,height: 20)
+                    } else {
+                        Image(systemName: "heart")
+                            .resizable()
+                            .frame(width: 20,height: 20)
+                    }
+                }
             }
         }
     }
@@ -144,6 +166,6 @@ struct DetailPage: View {
 
 struct DetailPage_Previews: PreviewProvider {
     static var previews: some View {
-        DetailPage(viewModel: CryptoViewModel())
+        DetailPage(viewModel: CryptoViewModel(), fav: false)
     }
 }

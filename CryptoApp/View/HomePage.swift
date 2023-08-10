@@ -115,7 +115,7 @@ struct HomePage: View {
 
                 ScrollView{
                         ForEach(coinList.prefix(4)) { list in
-                            NavigationLink(destination: DetailPage(viewModel: viewModel,coin: list, coinList: coinList)) {
+                            NavigationLink(destination: DetailPage(viewModel: viewModel,coin: list, coinList: coinList, fav: false)) {
                                 HomePageDesign(coin: list)
                             }
                         }
@@ -124,11 +124,6 @@ struct HomePage: View {
             }
 
             .navigationTitle("Portfolio")
-            .toolbar{
-                ToolbarItem {
-                    Image(systemName: "heart")
-                }
-            }
             .background(Color("background"))
         }
         .onAppear{
