@@ -14,9 +14,16 @@ struct DetailPage: View {
     @State var coinList: [CoinModel]?
     @State private var buyOrSell  = 0
     @State var fav: Bool
-    @State var estimatedValue: Float?
-    @State var tradeValue: Float?
-    @State var tradeFee: Float?
+    @State var estimatedValue:Double = 0.0
+    @State var tradeValue:Double = 0.0
+    @State var tradeFee:Double = 0.0
+    @State var sonuc = 0.0
+    
+    func hesapla()-> Double{
+        let hesap = tradeFee / estimatedValue
+        sonuc = hesap
+        return sonuc
+    }
     var body: some View {
         
         LazyVStack {
@@ -48,81 +55,99 @@ struct DetailPage: View {
                     }
                     .frame(width: 90,height: 45)
                 }
-            }
-            
-            Image("grafik2")
-                .resizable()
-                .frame(width: 375,height: 254)
-            Picker("", selection: $buyOrSell) {
-                Text("Buy").tag(0)
-                Text("Sell").tag(1)
-            }.pickerStyle(.segmented)
-                .frame(width: 335,height: 32)
-                .background(Color("iconColors2"))
-            ScrollView {
-                //tahmini satın alma değeri
-                VStack {
-                    Text("Estimated purchase value")
-                        .foregroundColor(.gray)
-                        .offset(x:-90)
-                    TextField("", value: $estimatedValue, formatter: NumberFormatter())
-                        .padding(.leading,10)
-                    Rectangle()
-                        .frame(width: 370,height: 1)
-                        .foregroundColor(.gray)
-                        .offset(y:-10)
-                }
-                VStack {
-                    //ticari değer
-                    Text("Trade Value")
-                        .foregroundColor(.gray)
-                        .offset(x:-140)
-                    TextField("", value: $tradeValue, formatter: NumberFormatter())
-                        .padding(.leading,10)
-                    Rectangle()
-                        .frame(width: 370,height: 1)
-                        .foregroundColor(.gray)
-                        .offset(y:-10)
-                }
-                VStack {
-                    //ticaret ücreti
-                    Text("Trade Fee")
-                        .foregroundColor(.gray)
-                        .offset(x:-145)
-                    TextField("", value: $tradeFee, formatter: NumberFormatter())
-                        .padding(.leading,10)
-                    Rectangle()
-                        .frame(width: 370,height: 1)
-                        .foregroundColor(.gray)
-                        .offset(y:-10)
-                }
-                .padding(.top,10)
-                if buyOrSell == 0 {
-                    Button {
-                        print("Satın alındı")
-                    } label: {
-                        Text("Buy")
-                        
-                    }
-                    .frame(width: 200,height: 50)
-                    .background(Color("iconColors"))
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    
-                } else {
-                    Button {
-                        print("Satıldı")
-                    } label: {
-                        Text("Sell")
-                    }
-                    .frame(width: 200,height: 50)
-                    .background(Color("iconColors2"))
-                    .foregroundColor(.black)
-                    .cornerRadius(10)
+                
+                
+                if let coins = coin,let high = coin?.high_24h,let low = coin?.low_24h {
+                    CoinGraph(coin: coins)
+                        .frame(width: 375,height: 254)
+                        .overlay(VStack{
+                            Text("\(high.asCurrencyWith6Decimals())")
+                            Spacer()
+                            Text("\(((high + low) / 2).asCurrencyWith6Decimals() )")
+                            Spacer()
+                            Text("\(low.asCurrencyWith6Decimals())")
+                        },alignment: .leading)
                 }
                 
+                
+                
+                Picker("", selection: $buyOrSell) {
+                    Text("Buy").tag(0)
+                    Text("Sell").tag(1)
+                }.pickerStyle(.segmented)
+                    .frame(width: 335,height: 32)
+                    .background(Color("iconColors2"))
+                ScrollView {
+                    //tahmini satın alma değeri Estimated purchase value
+                    VStack {
+                        Text("tahmini satın alma değeri")
+                            .foregroundColor(.gray)
+                            .offset(x:-90)
+                        TextField("", value: $estimatedValue, formatter: NumberFormatter())
+                            .padding(.leading,10)
+                            .onChange(of: estimatedValue) { newValue in
+                                tradeValue = hesapla()
+                            }
+                        Rectangle()
+                            .frame(width: 370,height: 1)
+                            .foregroundColor(.gray)
+                            .offset(y:-10)
+                    }
+                    VStack {
+                        //ticari değer Trade Value
+                        Text("ticari değer")
+                            .foregroundColor(.gray)
+                            .offset(x:-140)
+                        TextField("", value: $tradeValue, formatter: NumberFormatter())
+                            .padding(.leading,10)
+                            
+                        Rectangle()
+                            .frame(width: 370,height: 1)
+                            .foregroundColor(.gray)
+                            .offset(y:-10)
+                    }
+                    VStack {
+                        //ticaret ücreti Trade Fee
+                        Text("ticaret ücreti")
+                            .foregroundColor(.gray)
+                            .offset(x:-145)
+                        TextField("", value: $tradeFee, formatter: NumberFormatter())
+                            .padding(.leading,10)
+                            .onChange(of: tradeFee) { newValue in
+                                tradeValue = hesapla()
+                            }
+                        Rectangle()
+                            .frame(width: 370,height: 1)
+                            .foregroundColor(.gray)
+                            .offset(y:-10)
+                    }
+                    .padding(.top,10)
+                    if buyOrSell == 0 {
+                        Button {
+                            print(hesapla())
+                        } label: {
+                            Text("Buy")
+                            
+                        }
+                        .frame(width: 200,height: 50)
+                        .background(Color("iconColors"))
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        
+                    } else {
+                        Button {
+                            print("Satıldı")
+                        } label: {
+                            Text("Sell")
+                        }
+                        .frame(width: 200,height: 50)
+                        .background(Color("iconColors2"))
+                        .foregroundColor(.black)
+                        .cornerRadius(10)
+                    }
+                    
+                }
             }
-            
         }
         .onAppear{
             if viewModel.favorites.contains(where: {$0.id ?? "" == coin?.id }) {
@@ -130,6 +155,7 @@ struct DetailPage: View {
             } else {
                 fav = false
             }
+            estimatedValue = coin?.current_price ?? 0
         }
         .toolbar {
             ToolbarItem{
@@ -161,6 +187,7 @@ struct DetailPage: View {
                 }
             }
         }
+        
     }
 }
 

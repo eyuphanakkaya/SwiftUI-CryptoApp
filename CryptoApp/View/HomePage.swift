@@ -129,7 +129,11 @@ struct HomePage: View {
         .onAppear{
             viewModel.fetchCoinList { result in
                 self.coinList.append(contentsOf: result)
+//                for x in result {
+//                   // print("\(x.sparkline_in_7d?.price)")
+//                }
             }
+            
             
         }
     }

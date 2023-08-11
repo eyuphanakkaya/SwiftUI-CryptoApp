@@ -67,5 +67,22 @@ class CryptoViewModel: ObservableObject {
         }
         
     }
+    func fetchCoinCharts(id: String,completion: @escaping(CoinCharts)-> Void) {
+        let url = URL(string: "\(apiCaller.api)coins/\(id)/market_chart?vs_currency=usd&days=7&interval=daily&precision=2")
+        if let comingUrl = url {
+            URLSession.shared.dataTask(with: comingUrl) { data, response, error in
+                guard data != nil || error != nil else{
+                    print(error)
+                    return
+                }
+                do{
+                    let result = try JSONDecoder().decode(CoinCharts.self, from: data!)
+                    completion(result)
+                } catch {
+                    print(error)
+                }
+            }.resume()
+        }
+    }
     
 }

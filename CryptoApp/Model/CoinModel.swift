@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Charts
 
 //URLhttps://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=24&locale=en
 /*{
@@ -221,6 +222,10 @@ struct Coin: Codable,Hashable {
     let thumb: String?
     let large: String?
 }
+struct CoinCharts: Codable {
+    let prices: [[Double]]?
+}
+
 
 
 struct CoinModel: Identifiable, Codable,Hashable {
@@ -246,6 +251,8 @@ struct CoinModel: Identifiable, Codable,Hashable {
     let atl_date: String?
     let last_updated: String?
     let sparkline_in_7d: SparklineIn7D?
+    
+
 
 }
 

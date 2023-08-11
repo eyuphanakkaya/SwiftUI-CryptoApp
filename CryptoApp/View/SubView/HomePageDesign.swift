@@ -34,8 +34,7 @@ struct HomePageDesign: View {
                     }
                   
                 }
-                Image("grafik")
-                    .resizable()
+                 CoinGraph(coin: coin)
                     .frame(width: 84,height: 37)
                 VStack {
                     Text("\(coin.current_price.asCurrencyWith6Decimals())")

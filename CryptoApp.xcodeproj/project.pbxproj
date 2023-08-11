@@ -10,7 +10,7 @@
 		A415C58B2A822F8100E22DF7 /* MarketPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A415C58A2A822F8100E22DF7 /* MarketPage.swift */; };
 		A415C58D2A82300B00E22DF7 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A415C58C2A82300B00E22DF7 /* ProfilePage.swift */; };
 		A415C5902A8231A400E22DF7 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = A415C58F2A8231A400E22DF7 /* Double.swift */; };
-		A415C5922A823B2600E22DF7 /* LineGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A415C5912A823B2600E22DF7 /* LineGraph.swift */; };
+		A415C5922A823B2600E22DF7 /* CoinGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A415C5912A823B2600E22DF7 /* CoinGraph.swift */; };
 		A43724632A83A10100480A10 /* DetailPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43724622A83A10100480A10 /* DetailPage.swift */; };
 		A45C429E2A8256A7006430CB /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = A45C429D2A8256A7006430CB /* Lottie */; };
 		A45C42A12A8256C5006430CB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A45C42A02A8256C5006430CB /* Kingfisher */; };
@@ -31,7 +31,7 @@
 		A415C58A2A822F8100E22DF7 /* MarketPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPage.swift; sourceTree = "<group>"; };
 		A415C58C2A82300B00E22DF7 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		A415C58F2A8231A400E22DF7 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
-		A415C5912A823B2600E22DF7 /* LineGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineGraph.swift; sourceTree = "<group>"; };
+		A415C5912A823B2600E22DF7 /* CoinGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinGraph.swift; sourceTree = "<group>"; };
 		A43724622A83A10100480A10 /* DetailPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPage.swift; sourceTree = "<group>"; };
 		A45C42A22A825731006430CB /* HomePageDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDesign.swift; sourceTree = "<group>"; };
 		A45C42A42A8259A1006430CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -132,7 +132,7 @@
 				A4A0FEE62A810C03001E6290 /* HomePage.swift */,
 				A415C58A2A822F8100E22DF7 /* MarketPage.swift */,
 				A415C58C2A82300B00E22DF7 /* ProfilePage.swift */,
-				A415C5912A823B2600E22DF7 /* LineGraph.swift */,
+				A415C5912A823B2600E22DF7 /* CoinGraph.swift */,
 				A43724622A83A10100480A10 /* DetailPage.swift */,
 				A4758AC22A8501A000DEC8D8 /* SearchPage.swift */,
 			);
@@ -246,7 +246,7 @@
 				A45C42A32A825731006430CB /* HomePageDesign.swift in Sources */,
 				A4A0FEE32A80E905001E6290 /* CoinModel.swift in Sources */,
 				A415C58B2A822F8100E22DF7 /* MarketPage.swift in Sources */,
-				A415C5922A823B2600E22DF7 /* LineGraph.swift in Sources */,
+				A415C5922A823B2600E22DF7 /* CoinGraph.swift in Sources */,
 				A4A0FED12A80E8A9001E6290 /* CryptoApp.swift in Sources */,
 				A4758AC12A84F21900DEC8D8 /* RegisterPageDesign.swift in Sources */,
 			);
