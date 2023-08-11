@@ -10,11 +10,11 @@ import Charts
 
 struct MarketPage: View {
     @State var search = ""
-    @State var searchList = [CoinSearch]()
-    @State var coin: CoinSearch?
+    @State var searchList = [Coin]()
+    @State var coin: CoinSearchResult?
     @State var selectedItem = true
-    var searchResult: [CoinSearch] {
-        return searchList.filter{$0.name!.localizedCaseInsensitiveContains(search)}
+    var searchResult: [Coin] {
+        return searchList.filter{$0.name.localizedCaseInsensitiveContains(search)}
     }
     @ObservedObject var viewModel: CryptoViewModel
     
@@ -87,13 +87,13 @@ struct MarketPage: View {
                 } else {
                     VStack{
                         ScrollView{
-                            ForEach(searchResult) { list in
-                                SearchPage(coin: list)
-//                                NavigationLink(destination: DetailPage(viewModel: viewModel,coin: list, fav: false)) {
-//                                   SearchPage(coin: list)
-//                                }
-                             
+                            ForEach(searchResult.prefix(10),id: \.hashValue) { list in
+                                ForEach(viewModel.myList.prefix(10)) { liste in
+                                    SearchPage(coin: list,coinModel: liste)
+                                }
+                               
                             }
+                            
                         }
                         .frame(width: 345,height: 550)
                         .padding()
@@ -103,13 +103,10 @@ struct MarketPage: View {
                 }
 
             }
-            .searchable(text: $search,prompt: "Search Coin")
+            .searchable(text: $search)
             .onChange(of: search) { newSearch in
                 viewModel.fetchSearchCoin(searchCoin: newSearch) { result in
                     searchList.append(contentsOf: result)
-                    print("yeniii ARAMAAAA =\(newSearch)")
-                    print("sonucccc =\(result)")
-                    print("ARAMAAAA =\(searchList)")
                 }
             }
             .onAppear{
