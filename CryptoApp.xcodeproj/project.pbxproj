@@ -25,6 +25,16 @@
 		A4A0FEE32A80E905001E6290 /* CoinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A0FEE22A80E905001E6290 /* CoinModel.swift */; };
 		A4A0FEE52A80F1A6001E6290 /* CryptoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A0FEE42A80F1A6001E6290 /* CryptoViewModel.swift */; };
 		A4A0FEE72A810C03001E6290 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A0FEE62A810C03001E6290 /* HomePage.swift */; };
+		A4D054DB2A8A2D55004C7D90 /* WalletModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D054DA2A8A2D55004C7D90 /* WalletModel.swift */; };
+		A4D054DD2A8A2EEC004C7D90 /* WalletPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D054DC2A8A2EEC004C7D90 /* WalletPage.swift */; };
+		A4D054DF2A8A5D28004C7D90 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4D054DE2A8A5D28004C7D90 /* GoogleService-Info.plist */; };
+		A4D054E22A8A5E3F004C7D90 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = A4D054E12A8A5E3F004C7D90 /* FirebaseAnalytics */; };
+		A4D054E42A8A5E3F004C7D90 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A4D054E32A8A5E3F004C7D90 /* FirebaseAnalyticsSwift */; };
+		A4D054E62A8A5E3F004C7D90 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A4D054E52A8A5E3F004C7D90 /* FirebaseAuth */; };
+		A4D054E82A8A5E3F004C7D90 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = A4D054E72A8A5E3F004C7D90 /* FirebaseAuthCombine-Community */; };
+		A4D054EA2A8A5E3F004C7D90 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = A4D054E92A8A5E3F004C7D90 /* FirebaseDatabase */; };
+		A4D054EC2A8A5E3F004C7D90 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A4D054EB2A8A5E3F004C7D90 /* FirebaseFirestore */; };
+		A4D054EE2A8A5E3F004C7D90 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A4D054ED2A8A5E3F004C7D90 /* FirebaseStorage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +56,9 @@
 		A4A0FEE22A80E905001E6290 /* CoinModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinModel.swift; sourceTree = "<group>"; };
 		A4A0FEE42A80F1A6001E6290 /* CryptoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoViewModel.swift; sourceTree = "<group>"; };
 		A4A0FEE62A810C03001E6290 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
+		A4D054DA2A8A2D55004C7D90 /* WalletModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletModel.swift; sourceTree = "<group>"; };
+		A4D054DC2A8A2EEC004C7D90 /* WalletPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPage.swift; sourceTree = "<group>"; };
+		A4D054DE2A8A5D28004C7D90 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,8 +66,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4D054E42A8A5E3F004C7D90 /* FirebaseAnalyticsSwift in Frameworks */,
+				A4D054E82A8A5E3F004C7D90 /* FirebaseAuthCombine-Community in Frameworks */,
+				A4D054EE2A8A5E3F004C7D90 /* FirebaseStorage in Frameworks */,
+				A4D054E62A8A5E3F004C7D90 /* FirebaseAuth in Frameworks */,
 				A45C42A12A8256C5006430CB /* Kingfisher in Frameworks */,
 				A45C429E2A8256A7006430CB /* Lottie in Frameworks */,
+				A4D054EC2A8A5E3F004C7D90 /* FirebaseFirestore in Frameworks */,
+				A4D054EA2A8A5E3F004C7D90 /* FirebaseDatabase in Frameworks */,
+				A4D054E22A8A5E3F004C7D90 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +108,7 @@
 		A4A0FECF2A80E8A9001E6290 /* CryptoApp */ = {
 			isa = PBXGroup;
 			children = (
+				A4D054DE2A8A5D28004C7D90 /* GoogleService-Info.plist */,
 				A45C42A42A8259A1006430CB /* Info.plist */,
 				A415C58E2A82318D00E22DF7 /* Extensions */,
 				A4A0FEE12A80E8ED001E6290 /* Model */,
@@ -143,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				A4A0FEE22A80E905001E6290 /* CoinModel.swift */,
+				A4D054DA2A8A2D55004C7D90 /* WalletModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -153,6 +175,7 @@
 				A45C42A22A825731006430CB /* HomePageDesign.swift */,
 				A4758ABE2A84EB7400DEC8D8 /* LoginPageDesign.swift */,
 				A4758AC02A84F21900DEC8D8 /* RegisterPageDesign.swift */,
+				A4D054DC2A8A2EEC004C7D90 /* WalletPage.swift */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -176,6 +199,13 @@
 			packageProductDependencies = (
 				A45C429D2A8256A7006430CB /* Lottie */,
 				A45C42A02A8256C5006430CB /* Kingfisher */,
+				A4D054E12A8A5E3F004C7D90 /* FirebaseAnalytics */,
+				A4D054E32A8A5E3F004C7D90 /* FirebaseAnalyticsSwift */,
+				A4D054E52A8A5E3F004C7D90 /* FirebaseAuth */,
+				A4D054E72A8A5E3F004C7D90 /* FirebaseAuthCombine-Community */,
+				A4D054E92A8A5E3F004C7D90 /* FirebaseDatabase */,
+				A4D054EB2A8A5E3F004C7D90 /* FirebaseFirestore */,
+				A4D054ED2A8A5E3F004C7D90 /* FirebaseStorage */,
 			);
 			productName = CryptoApp;
 			productReference = A4A0FECD2A80E8A9001E6290 /* CryptoApp.app */;
@@ -208,6 +238,7 @@
 			packageReferences = (
 				A45C429C2A8256A7006430CB /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				A45C429F2A8256C5006430CB /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				A4D054E02A8A5E3F004C7D90 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = A4A0FECE2A80E8A9001E6290 /* Products */;
 			projectDirPath = "";
@@ -225,6 +256,7 @@
 			files = (
 				A4A0FED82A80E8A9001E6290 /* Preview Assets.xcassets in Resources */,
 				A4A0FED52A80E8A9001E6290 /* Assets.xcassets in Resources */,
+				A4D054DF2A8A5D28004C7D90 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +267,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4D054DB2A8A2D55004C7D90 /* WalletModel.swift in Sources */,
+				A4D054DD2A8A2EEC004C7D90 /* WalletPage.swift in Sources */,
 				A4758ABF2A84EB7400DEC8D8 /* LoginPageDesign.swift in Sources */,
 				A4A0FEE72A810C03001E6290 /* HomePage.swift in Sources */,
 				A43724632A83A10100480A10 /* DetailPage.swift in Sources */,
@@ -469,6 +503,14 @@
 				kind = branch;
 			};
 		};
+		A4D054E02A8A5E3F004C7D90 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -481,6 +523,41 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A45C429F2A8256C5006430CB /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		A4D054E12A8A5E3F004C7D90 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A4D054E02A8A5E3F004C7D90 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		A4D054E32A8A5E3F004C7D90 /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A4D054E02A8A5E3F004C7D90 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		A4D054E52A8A5E3F004C7D90 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A4D054E02A8A5E3F004C7D90 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		A4D054E72A8A5E3F004C7D90 /* FirebaseAuthCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A4D054E02A8A5E3F004C7D90 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAuthCombine-Community";
+		};
+		A4D054E92A8A5E3F004C7D90 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A4D054E02A8A5E3F004C7D90 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		A4D054EB2A8A5E3F004C7D90 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A4D054E02A8A5E3F004C7D90 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		A4D054ED2A8A5E3F004C7D90 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A4D054E02A8A5E3F004C7D90 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

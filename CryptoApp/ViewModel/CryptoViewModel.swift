@@ -13,7 +13,10 @@ class apiCaller {
 class CryptoViewModel: ObservableObject {
     @Published var myList = [CoinModel]()
     @Published var favorites = [CoinModel]()
+    @Published var myWallet = [WalletModel]()
     
+    @Published var totalWallet = 100.0
+
     func fetchAllCoin() {
         fetchCoinList { result in
             DispatchQueue.main.async {
@@ -22,11 +25,6 @@ class CryptoViewModel: ObservableObject {
             }
         }
     }
-//    func fetchAllSearch(search: String) {
-//        fetchSearchList(search: search) { result in
-//            self.searchList.append(contentsOf: result)
-//        }
-//    }
     //https://api.coingecko.com/api/v3/search?query=bitcoin
     //https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=24&locale=en
     

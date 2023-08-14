@@ -12,18 +12,14 @@ struct DetailPage: View {
     @ObservedObject var viewModel: CryptoViewModel
     @State var coin: CoinModel?
     @State var coinList: [CoinModel]?
-    @State private var buyOrSell  = 0
+    @State var buyOrSell  = 0
     @State var fav: Bool
-    @State var estimatedValue:Double = 0.0
-    @State var tradeValue:Double = 0.0
-    @State var tradeFee:Double = 0.0
+    @State var price:Double = 0.0
+    @State var amount:Double = 0.0
+    @State var total:Double = 0.0
     @State var sonuc = 0.0
     
-    func hesapla()-> Double{
-        let hesap = tradeFee / estimatedValue
-        sonuc = hesap
-        return sonuc
-    }
+    
     var body: some View {
         
         LazyVStack {
@@ -69,8 +65,6 @@ struct DetailPage: View {
                         },alignment: .leading)
                 }
                 
-                
-                
                 Picker("", selection: $buyOrSell) {
                     Text("Buy").tag(0)
                     Text("Sell").tag(1)
@@ -80,14 +74,11 @@ struct DetailPage: View {
                 ScrollView {
                     //tahmini satın alma değeri Estimated purchase value
                     VStack {
-                        Text("tahmini satın alma değeri")
+                        Text("Fiyat")
                             .foregroundColor(.gray)
-                            .offset(x:-90)
-                        TextField("", value: $estimatedValue, formatter: NumberFormatter())
+                            .offset(x:-140)
+                        TextField("", value: $price, formatter: NumberFormatter())
                             .padding(.leading,10)
-                            .onChange(of: estimatedValue) { newValue in
-                                tradeValue = hesapla()
-                            }
                         Rectangle()
                             .frame(width: 370,height: 1)
                             .foregroundColor(.gray)
@@ -95,27 +86,30 @@ struct DetailPage: View {
                     }
                     VStack {
                         //ticari değer Trade Value
-                        Text("ticari değer")
+                        Text("Miktar")
                             .foregroundColor(.gray)
                             .offset(x:-140)
-                        TextField("", value: $tradeValue, formatter: NumberFormatter())
+                        TextField("", value: $amount, formatter: NumberFormatter())
                             .padding(.leading,10)
-                            
+                            .onChange(of: amount) { newValue in
+                                sonuc = price * newValue
+                            }
+                        
                         Rectangle()
                             .frame(width: 370,height: 1)
                             .foregroundColor(.gray)
                             .offset(y:-10)
                     }
+                    
                     VStack {
                         //ticaret ücreti Trade Fee
-                        Text("ticaret ücreti")
+                        Text("Toplam")
                             .foregroundColor(.gray)
                             .offset(x:-145)
-                        TextField("", value: $tradeFee, formatter: NumberFormatter())
+                        Text("\(sonuc.asCurrencyWith6Decimals())")
+                            .offset(x: -150)
                             .padding(.leading,10)
-                            .onChange(of: tradeFee) { newValue in
-                                tradeValue = hesapla()
-                            }
+                        
                         Rectangle()
                             .frame(width: 370,height: 1)
                             .foregroundColor(.gray)
@@ -124,7 +118,22 @@ struct DetailPage: View {
                     .padding(.top,10)
                     if buyOrSell == 0 {
                         Button {
-                            print(hesapla())
+                            if sonuc > viewModel.totalWallet {
+                                print("Yetersiz Bakiye")
+                            } else {
+                                viewModel.totalWallet = viewModel.totalWallet - sonuc
+                                if let coinID = coin?.id {
+                                    if let index = viewModel.myWallet.firstIndex(where: { $0.id == coinID }) {
+                                        viewModel.myWallet[index].amount
+                                        = amount + (viewModel.myWallet[index].amount ?? 0)
+                                        
+                                    } else {
+                                        viewModel.myWallet.append(WalletModel(id: coinID, image: coin?.image, title: coin?.name, subtitle: coin?.symbol, amount: amount, price: sonuc,priceChange: coin?.price_change_percentage_24h))
+                                    }
+                                }
+                                
+                                print("Bakiye yeterli")
+                            }
                         } label: {
                             Text("Buy")
                             
@@ -136,7 +145,19 @@ struct DetailPage: View {
                         
                     } else {
                         Button {
-                            print("Satıldı")
+                            if let coinID = coin?.id {
+                                if let index = viewModel.myWallet.firstIndex(where: {$0.id == coinID}) {
+                                    if viewModel.myWallet[index].amount ?? 0 > sonuc {
+                                        viewModel.myWallet[index].amount = (viewModel.myWallet[index].amount ?? 0) - sonuc
+                                        viewModel.totalWallet = amount + viewModel.totalWallet
+                                        if  viewModel.myWallet[index].amount == 0 {
+                                            viewModel.myWallet.remove(at: index)
+                                        }
+                                    } else {
+                                        print("Yetersiz Bakiye")
+                                    }
+                                }
+                            }
                         } label: {
                             Text("Sell")
                         }
@@ -149,13 +170,24 @@ struct DetailPage: View {
                 }
             }
         }
+        .onChange(of: buyOrSell, perform: { newValue in
+            if let currentPrice = coin?.current_price {
+                if newValue == 0 {
+                    price = currentPrice
+                } else {
+                    price = currentPrice * 0.99
+                }
+            }
+            
+        })
         .onAppear{
             if viewModel.favorites.contains(where: {$0.id ?? "" == coin?.id }) {
                 fav = true
             } else {
                 fav = false
             }
-            estimatedValue = coin?.current_price ?? 0
+            price = coin?.current_price ?? 0
+            
         }
         .toolbar {
             ToolbarItem{

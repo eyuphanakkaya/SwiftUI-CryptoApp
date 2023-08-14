@@ -11,7 +11,8 @@ import Kingfisher
 struct HomePage: View {
     @ObservedObject var viewModel: CryptoViewModel
     @State var coinList = [CoinModel]()
-    @State var money = 25000.0
+    @State var coin: CoinModel?
+
     var body: some View {
         NavigationView{
            
@@ -22,8 +23,8 @@ struct HomePage: View {
                             .frame(width: 115,height: 20)
                             .font(.system(size: 16))
                             .foregroundColor(.white)
-                        Text("$56.98")
-                            .frame(width: 115,height: 40)
+                        Text("\(viewModel.totalWallet.asCurrencyWith6Decimals())")
+                            .frame(width: 160,height: 40)
                             .font(.system(size: 32))
                             .foregroundColor(.white)
                             .bold()
@@ -49,56 +50,8 @@ struct HomePage: View {
                 .background(Color("iconColors"))
                 .cornerRadius(20)
                 .padding(.top,20)
-               
-                ScrollView(.horizontal){
-                    HStack {
-                        ZStack{
-                            Image("background")
-                            .frame(width: 191,height: 120)
-                            .cornerRadius(24)
-                            VStack {
-                                HStack{
-                                    Image("bitcoin")
-                                        .resizable()
-                                        .frame(width: 40,height: 40)
-                                    VStack(alignment: .leading) {
-                                        Text("BTC")
-                                        Text("Bitcoin")
-                                    }
-                                    ZStack {
-                                        Rectangle()
-                                            .foregroundColor(Color(.gray))
-                                            .frame(width: 55,height: 22)
-                                            .cornerRadius(8)
-                                        Text("+15.3%")
-                                            .font(.system(size: 10))
-                                            .foregroundColor(.white)
-                                    }
-                                    
-                                }
-                                Rectangle()
-                                    .frame(width: 159,height: 1)
-                                    .foregroundColor(.gray)
-                                HStack {
-                                    Text("$26.46")
-                                        .frame(width: 50,height: 18)
-                                        .font(.system(size: 14))
-                                        .padding(.leading,10)
-                                    Spacer()
-                                    Text("0.0012BTC")
-                                        .frame(width: 55,height: 12)
-                                        .font(.system(size: 10))
-                                        .padding(.trailing,10)
-                                }
-                            }
-                          
-                            
-                           
-                        }
 
-                    }
-                    .padding()
-                }
+                WalletPage(viewModel: viewModel)
                 HStack {
                     Text("Charts")
                         .padding()

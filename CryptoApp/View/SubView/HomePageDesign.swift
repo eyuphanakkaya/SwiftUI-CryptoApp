@@ -9,6 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct HomePageDesign: View {
+    
     @State var coin: CoinModel
     var body: some View {
         VStack {
@@ -17,7 +18,6 @@ struct HomePageDesign: View {
                     KFImage(URL(string: resim ))
                         .resizable()
                         .frame(width: 56, height: 56)
-
                 }
 
                 VStack {

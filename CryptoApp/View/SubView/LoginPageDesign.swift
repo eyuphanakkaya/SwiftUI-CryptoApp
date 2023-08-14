@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct LoginPageDesign: View {
     @State private var mail = ""
-    @State  var password: Int
+    @State  var password =  ""
     var body: some View {
         
         NavigationView {
@@ -44,7 +45,7 @@ struct LoginPageDesign: View {
                         
                     Text("Password")
                         .bold()
-                   TextField("", value: $password, formatter: NumberFormatter())
+                    TextField("", text: $password)
                         .padding(.leading,10)
                         .frame(width: 345,height: 42)
                         .border(Color("iconColors"))
@@ -81,10 +82,13 @@ struct LoginPageDesign: View {
         }
       
     }
+    func login()  {
+        Auth.auth().signIn(withEmail: mail, password: password)
+    }
 }
 
 struct LoginPageDesign_Previews: PreviewProvider {
     static var previews: some View {
-        LoginPageDesign(password: 0)
+        LoginPageDesign(password: "")
     }
 }
