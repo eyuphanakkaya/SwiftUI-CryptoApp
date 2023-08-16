@@ -19,11 +19,11 @@ struct HomePage: View {
             VStack{
                 ZStack {
                     VStack(alignment: .leading) {
-                        Text("Total Portfolio")
+                        Text("Total Money")
                             .frame(width: 115,height: 20)
                             .font(.system(size: 16))
                             .foregroundColor(.white)
-                        Text("\(viewModel.totalWallet.asCurrencyWith6Decimals())")
+                        Text("$\(viewModel.totalWallet.asNumberString())")
                             .frame(width: 160,height: 40)
                             .font(.system(size: 32))
                             .foregroundColor(.white)
@@ -32,17 +32,17 @@ struct HomePage: View {
                     .padding(.leading,-150)
                     
                 
-                ZStack {
-                    Rectangle()
-                        .foregroundColor(Color(.white))
-                        .frame(width: 75,height: 32)
-                        .cornerRadius(8)
-                    Text("+15.3%")
-                        .font(.system(size: 10))
-                        .frame(width: 40,height: 15)
-                        .foregroundColor(Color("iconColors"))
-                }
-                .offset(x:120)
+//                ZStack {
+//                    Rectangle()
+//                        .foregroundColor(Color(.white))
+//                        .frame(width: 75,height: 32)
+//                        .cornerRadius(8)
+//                    Text("+15.3%")
+//                        .font(.system(size: 10))
+//                        .frame(width: 40,height: 15)
+//                        .foregroundColor(Color("iconColors"))
+//                }
+//                .offset(x:120)
                     
                 }
                 .frame(width: 345,height: 112)
@@ -50,20 +50,12 @@ struct HomePage: View {
                 .background(Color("iconColors"))
                 .cornerRadius(20)
                 .padding(.top,20)
-
                 WalletPage(viewModel: viewModel)
                 HStack {
-                    Text("Charts")
+                    Text("Populer")
                         .padding()
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color("iconColors"))
                     Spacer()
-                    Button {
-                        
-                    } label: {
-                        Text("See All")
-                            .padding()
-                            .foregroundColor(Color("iconColors"))
-                    }
                 }
 
                 ScrollView{

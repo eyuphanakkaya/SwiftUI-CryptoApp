@@ -12,9 +12,10 @@ import FirebaseCore
 @main
 struct CryptoApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @ObservedObject var viewModel = CryptoViewModel()
     var body: some Scene {
         WindowGroup {
-           LoginPageDesign()
+            LoginPageDesign(viewModel: viewModel)
         }
     }
 }

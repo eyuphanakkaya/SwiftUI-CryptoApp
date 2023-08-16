@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var viewModel = CryptoViewModel()
+    @ObservedObject var viewModel: CryptoViewModel
     var body: some View {
         ZStack {
             TabView {
@@ -20,7 +20,7 @@ struct ContentView: View {
                     .tabItem {
                        Image(systemName: "basket")
                     }
-                ProfilePage()
+                ProfilePage(viewModel: viewModel)
                     .tabItem {
                         Image(systemName: "person")
                     }
@@ -31,6 +31,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel: CryptoViewModel())
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 class apiCaller {
     static let api = "https://api.coingecko.com/api/v3/"
@@ -14,6 +15,9 @@ class CryptoViewModel: ObservableObject {
     @Published var myList = [CoinModel]()
     @Published var favorites = [CoinModel]()
     @Published var myWallet = [WalletModel]()
+    @Published var ref: DatabaseReference?
+    @Published var user: Users?
+    
     
     @Published var totalWallet = 100.0
 
@@ -25,6 +29,14 @@ class CryptoViewModel: ObservableObject {
             }
         }
     }
+//    func deneme() {
+//        fetchUserData { result in
+//            DispatchQueue.main.async {
+//               print(result)
+//
+//            }
+//        }
+//    }
     //https://api.coingecko.com/api/v3/search?query=bitcoin
     //https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=24&locale=en
     
@@ -82,5 +94,8 @@ class CryptoViewModel: ObservableObject {
             }.resume()
         }
     }
+
+
+    
     
 }

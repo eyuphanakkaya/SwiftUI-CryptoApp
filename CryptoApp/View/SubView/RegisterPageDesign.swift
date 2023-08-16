@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 
 struct RegisterPageDesign: View {
+    @State var viewModel: CryptoViewModel
     @Environment(\.presentationMode) var presentationMode
     @State var registerMail = ""
     @State var registerName = ""
@@ -17,6 +18,10 @@ struct RegisterPageDesign: View {
     @State var registerRepaetPassword = ""
     @State private var isEmailValid : Bool   = true
     @State private var isSecured: Bool = true
+    @State private var showToAlerts: Bool = false
+    @State private var alertsTitle = "Hata"
+    @State private var alertsMessage = ""
+    @State var usersControlList = [String]()
     @State var ref: DatabaseReference?
     var body: some View {
         VStack{
@@ -31,13 +36,13 @@ struct RegisterPageDesign: View {
             }.offset(y: -50)
             VStack {
                 Text("Welcome to Register")
-                     .frame(width: 330,height: 40 )
-                     .font(.system(size: 32))
-                     .bold()
-                 Text("Trusted by millions of users worldwide")
-                     .frame(width: 330,height: 18)
-                     .font(.system(size: 14))
-                     .foregroundColor(Color("iconColors"))
+                    .frame(width: 330,height: 40 )
+                    .font(.system(size: 32))
+                    .bold()
+                Text("Trusted by millions of users worldwide")
+                    .frame(width: 330,height: 18)
+                    .font(.system(size: 14))
+                    .foregroundColor(Color("iconColors"))
             }.offset(y: -30)
             VStack(alignment: .leading,spacing: 10) {
                 Text("Email")
@@ -53,13 +58,13 @@ struct RegisterPageDesign: View {
                         }
                     }
                 })
-                    .padding(.leading,10)
-                    .frame(width: 345,height: 42)
-                    .border(Color("iconColors"))
-                    .cornerRadius(8)
-                    .textContentType(.emailAddress)
-                    .keyboardType(.emailAddress)
-
+                .padding(.leading,10)
+                .frame(width: 345,height: 42)
+                .border(Color("iconColors"))
+                .cornerRadius(8)
+                .textContentType(.emailAddress)
+                .keyboardType(.emailAddress)
+                
                 Text("Name")
                     .bold()
                 TextField("", text: $registerName)
@@ -77,7 +82,7 @@ struct RegisterPageDesign: View {
                             self.registerName = String(newValue.prefix(25))
                         }
                     })
-                    
+                
                 Text("Surname")
                     .bold()
                 TextField("", text: $registerSurname)
@@ -119,12 +124,12 @@ struct RegisterPageDesign: View {
                         }
                     }
                     Button(action: {
-                         isSecured.toggle()
-                     }) {
-                         Image(systemName: self.isSecured ? "eye.slash" : "eye")
-                             .accentColor(Color("iconColors"))
-                             
-                     } .offset(x: 140)
+                        isSecured.toggle()
+                    }) {
+                        Image(systemName: self.isSecured ? "eye.slash" : "eye")
+                            .accentColor(Color("iconColors"))
+                        
+                    } .offset(x: 140)
                 }
                 Text("Repeat Password")
                     .bold()
@@ -150,24 +155,51 @@ struct RegisterPageDesign: View {
                     }
                     Spacer()
                     Button(action: {
-                         isSecured.toggle()
-                     }) {
-                         Image(systemName: self.isSecured ? "eye.slash" : "eye")
-                             .accentColor(Color("iconColors"))
-                            
-                     } .offset(x: 140)
+                        isSecured.toggle()
+                    }) {
+                        Image(systemName: self.isSecured ? "eye.slash" : "eye")
+                            .accentColor(Color("iconColors"))
+                    } .offset(x: 140)
                     
                 }
-                
-                    
             }
             .padding()
-
+            
             Button {
-                saveUser(name: registerName, surname: registerSurname, password: registerPassword, repeatPassword: registerRepaetPassword, mail: registerMail)
+                if registerName.isEmpty || registerMail.isEmpty || registerSurname.isEmpty || registerPassword.isEmpty || registerRepaetPassword.isEmpty  {
+                    showToAlerts = true
+                    alertsTitle = "Boş bırakma"
+                    alertsMessage = "Lütfen değerleri boş bırakmayınız."
+                } else if registerPassword != registerRepaetPassword {
+                    showToAlerts = true
+                    alertsTitle = "Şifre"
+                    alertsMessage = "Lütfen şifreleri aynı giriniz."
+                } else if !textFieldValidatorEmail(registerMail) {
+                    showToAlerts = true
+                    alertsTitle = "Mail"
+                    alertsMessage = "Lütfen mail formatını düzgün giriniz."
+                } else {
+                    checkIfEmailExists(email: registerMail) { result in
+                        if result {
+                            showToAlerts = true
+                            alertsTitle = "Hata"
+                            alertsMessage = "Bu mail adresi mevcut lütfen farklı bir adres giriniz."
+                        } else {
+                            saveUser(name: registerName, surname: registerSurname, password: registerPassword, repeatPassword: registerRepaetPassword, mail: registerMail)
+                            showToAlerts = true
+                            alertsTitle = "Başarılı"
+                            alertsMessage = "Kayıt başarıyla oluşturuldu."
+                        }
+                    }
+                   
+                }
+                
             } label: {
                 Text("Create")
                     .foregroundColor(.white)
+            }
+            .alert(isPresented: $showToAlerts) {
+                Alert(title: Text(alertsTitle),message: Text(alertsMessage),dismissButton: .cancel(Text("Tamam")))
             }
             .frame(width: 345,height: 38)
             .cornerRadius(8)
@@ -184,8 +216,10 @@ struct RegisterPageDesign: View {
             .font(.system(size: 12))
         }.onAppear{
             ref = Database.database().reference()
+            
         }
     }
+
     func saveUser(name: String,surname: String,password: String,repeatPassword: String,mail: String){
         saveAuthUser(mail: mail, password: password)
         let dict:[String:Any] = ["name":name,"surname":surname,"password":password,"repeat_password":repeatPassword,"mail":mail]
@@ -198,14 +232,26 @@ struct RegisterPageDesign: View {
             if error != nil {
                 print(error)
             } else {
-                print("Kayıt Başarıyla Oluşturuldu.")
+                print("Kayit olusturuldu")
             }
         }
     }
+
+    func checkIfEmailExists(email: String, completion: @escaping (Bool) -> Void) {
+       
+        ref?.child("users").queryOrdered(byChild: "mail").queryEqual(toValue: email).observeSingleEvent(of: .value) { snapshot in
+            if snapshot.exists() {
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
+    }
+    
 }
 
 struct RegisterPageDesign_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterPageDesign()
+        RegisterPageDesign(viewModel: CryptoViewModel())
     }
 }

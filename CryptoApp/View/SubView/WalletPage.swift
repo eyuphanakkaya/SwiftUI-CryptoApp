@@ -44,22 +44,18 @@ struct WalletPage: View {
                                  .frame(width: 159,height: 1)
                                  .foregroundColor(.gray)
                              HStack {
-                                 Text("Fiyat")
-                                 Text("\((wallet.price ?? 0).asCurrencyWith6Decimals())")
-                                     .frame(width: 60,height: 18)
+                                 Text("$\((wallet.price ?? 0).asNumberString())")
+                                     .frame(width: 70,height: 18)
                                      .font(.system(size: 14))
                                      .padding(.leading,10)
                                  Spacer()
-                                 Text("Miktar")
                                  Text("\((wallet.amount ?? 0).asNumberString())")
                                      .frame(width: 55,height: 12)
                                      .font(.system(size: 10))
                                      .padding(.trailing,10)
                              }
                          }
-                         
-                         
-                         
+                  
                      }
                      .frame(width: 191,height: 130)
                      .background(Color.white)

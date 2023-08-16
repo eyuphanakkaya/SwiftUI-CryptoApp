@@ -18,6 +18,9 @@ struct DetailPage: View {
     @State var amount:Double = 0.0
     @State var total:Double = 0.0
     @State var sonuc = 0.0
+    @State var alertTitle = ""
+    @State var alertMessage = ""
+    @State var showAlert = false
     
     
     var body: some View {
@@ -118,25 +121,31 @@ struct DetailPage: View {
                     .padding(.top,10)
                     if buyOrSell == 0 {
                         Button {
+                            
                             if sonuc > viewModel.totalWallet {
-                                print("Yetersiz Bakiye")
+                                showAlert = true
+                                alertTitle = "Yetersiz bakiye"
+                                alertMessage = "Lütfen bakiyenizi kontrol ediniz."
                             } else {
                                 viewModel.totalWallet = viewModel.totalWallet - sonuc
                                 if let coinID = coin?.id {
                                     if let index = viewModel.myWallet.firstIndex(where: { $0.id == coinID }) {
                                         viewModel.myWallet[index].amount
                                         = amount + (viewModel.myWallet[index].amount ?? 0)
+                                        viewModel.myWallet[index].price = sonuc + (viewModel.myWallet[index].price ?? 0)
                                         
                                     } else {
                                         viewModel.myWallet.append(WalletModel(id: coinID, image: coin?.image, title: coin?.name, subtitle: coin?.symbol, amount: amount, price: sonuc,priceChange: coin?.price_change_percentage_24h))
                                     }
                                 }
-                                
-                                print("Bakiye yeterli")
+                              
                             }
                         } label: {
                             Text("Buy")
                             
+                        }
+                        .alert(isPresented: $showAlert){
+                            Alert(title: Text(alertTitle),message: Text(alertMessage),dismissButton: .cancel(Text("Tamam")))
                         }
                         .frame(width: 200,height: 50)
                         .background(Color("iconColors"))
@@ -147,19 +156,29 @@ struct DetailPage: View {
                         Button {
                             if let coinID = coin?.id {
                                 if let index = viewModel.myWallet.firstIndex(where: {$0.id == coinID}) {
-                                    if viewModel.myWallet[index].amount ?? 0 > sonuc {
-                                        viewModel.myWallet[index].amount = (viewModel.myWallet[index].amount ?? 0) - sonuc
+                                    var wallet = viewModel.myWallet[index]
+                                    if wallet.amount ?? 0 > sonuc {
+                                        viewModel.myWallet[index].amount
+                                        =  (viewModel.myWallet[index].amount ?? 0) - amount
+                                        viewModel.myWallet[index].price = (viewModel.myWallet[index].price ?? 0) - sonuc 
+                                        
                                         viewModel.totalWallet = amount + viewModel.totalWallet
-                                        if  viewModel.myWallet[index].amount == 0 {
+                                        
+                                        if wallet.amount == 0 {
                                             viewModel.myWallet.remove(at: index)
                                         }
                                     } else {
-                                        print("Yetersiz Bakiye")
+                                        showAlert = true
+                                        alertTitle = "Yetersiz bakiye"
+                                        alertMessage = "Lütfen bakiyenizi kontrol ediniz."
                                     }
                                 }
                             }
                         } label: {
                             Text("Sell")
+                        }
+                        .alert(isPresented: $showAlert) {
+                            Alert(title: Text(alertTitle),message: Text(alertMessage),dismissButton: .cancel(Text("Tamam")))
                         }
                         .frame(width: 200,height: 50)
                         .background(Color("iconColors2"))
@@ -208,11 +227,11 @@ struct DetailPage: View {
                     
                 } label: {
                     if fav {
-                        Image(systemName: "heart.fill")
+                        Image(systemName: "bookmark.fill")
                             .resizable()
                             .frame(width: 20,height: 20)
                     } else {
-                        Image(systemName: "heart")
+                        Image(systemName: "bookmark")
                             .resizable()
                             .frame(width: 20,height: 20)
                     }

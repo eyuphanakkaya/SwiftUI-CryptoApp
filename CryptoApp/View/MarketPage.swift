@@ -19,8 +19,9 @@ struct MarketPage: View {
     @ObservedObject var viewModel: CryptoViewModel
     
     var body: some View {
-        VStack {
-            HStack {
+        NavigationView {
+            VStack {
+                HStack {
                     Button {
                         withAnimation {
                             selectedItem = true
@@ -28,7 +29,7 @@ struct MarketPage: View {
                         }
                         print("Hepsi")
                     } label: {
-                       
+                        
                         Text("All")
                             .foregroundColor(selectedItem ? Color.white : Color("iconColors"))
                     }
@@ -37,7 +38,7 @@ struct MarketPage: View {
                     .background(selectedItem ?  Color("iconColors") : Color.clear)
                     .cornerRadius(5)
                     .padding(.leading,10)
-                
+                    
                     Button {
                         withAnimation {
                             selectedItem = false
@@ -52,74 +53,60 @@ struct MarketPage: View {
                     .border(.gray)
                     .cornerRadius(5)
                     .padding(.leading,10)
-            }
-            NavigationStack {
-                if search.isEmpty && selectedItem == true {
-                    VStack{
-                        ScrollView{
+                }
+                .padding(.top,50)
+
+                ScrollView{
+                    if search.isEmpty && selectedItem == true {
+                        VStack{
                             ForEach(viewModel.myList) { list in
                                 NavigationLink(destination: DetailPage(viewModel: viewModel,coin: list, fav: false)) {
                                     HomePageDesign(coin: list)
                                 }
-                             
-                            }
-                        }
-                        .frame(width: 345,height: 550)
-                        .padding()
-                        
-                    }
-                    .background(Color("background"))
-                } else if search.isEmpty && selectedItem == false {
-                    VStack{
-                        ScrollView{
-                            ForEach(viewModel.favorites) { list in
-                                NavigationLink(destination: DetailPage(viewModel: viewModel,coin: list, fav: false)) {
-                                    HomePageDesign(coin: list)
-                                }
-                             
-                            }
-                        }
-                        .frame(width: 345,height: 550)
-                        .padding()
-                        
-                    }
-                    .background(Color("background"))
-                } else {
-                    VStack{
-                        ScrollView{
-                            ForEach(searchResult.prefix(10),id: \.hashValue) { list in
-                                ForEach(viewModel.myList.prefix(10)) { liste in
-                                    SearchPage(coin: list,coinModel: liste)
-                                }
-                               
                             }
                             
+                            
                         }
-                        .frame(width: 345,height: 550)
-                        .padding()
-                        
-                    }
-                    .background(Color("background"))
-                }
+                        .background(Color("background"))
+                    } else if search.isEmpty && selectedItem == false {
+                        VStack{
+                                ForEach(viewModel.favorites) { list in
+                                    NavigationLink(destination: DetailPage(viewModel: viewModel,coin: list, fav: false)) {
+                                        HomePageDesign(coin: list)
+                                    }
+                            }
 
-            }
-            .searchable(text: $search)
-            .onChange(of: search) { newSearch in
-                viewModel.fetchSearchCoin(searchCoin: newSearch) { result in
-                    searchList.append(contentsOf: result)
+                            
+                        }
+                        .background(Color("background"))
+                    } else {
+                        VStack{
+                                ForEach(searchResult.prefix(10),id: \.hashValue) { list in
+                                    ForEach(viewModel.myList.prefix(10)) { liste in
+                                        SearchPage(coin: list,coinModel: liste)
+                                    }
+                            }
+                        }
+                    }
                 }
+                .frame(width: 345,height: 600)
+                .padding()
             }
-            .onAppear{
-                viewModel.fetchAllCoin()
-              
+            .padding()
+            .background(Color("background"))
+        }
+        
+        .searchable(text: $search)
+        .onChange(of: search) { newSearch in
+            viewModel.fetchSearchCoin(searchCoin: newSearch) { result in
+                searchList.append(contentsOf: result)
             }
         }
-
-
-       
-
+        .onAppear{
+            viewModel.fetchAllCoin()
+        }
     }
-
+    
 }
 
 struct MarketPage_Previews: PreviewProvider {
