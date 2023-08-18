@@ -31,19 +31,6 @@ struct HomePage: View {
                     }
                     .padding(.leading,-150)
                     
-                
-//                ZStack {
-//                    Rectangle()
-//                        .foregroundColor(Color(.white))
-//                        .frame(width: 75,height: 32)
-//                        .cornerRadius(8)
-//                    Text("+15.3%")
-//                        .font(.system(size: 10))
-//                        .frame(width: 40,height: 15)
-//                        .foregroundColor(Color("iconColors"))
-//                }
-//                .offset(x:120)
-                    
                 }
                 .frame(width: 345,height: 112)
                 .cornerRadius(12)

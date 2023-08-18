@@ -7,10 +7,10 @@
 
 import Foundation
  
-struct Users: Identifiable {
-    var id: String = UUID().uuidString
+struct Users: Hashable {
     let email: String
     let name: String
     let surname: String
     let password: String
 }
+

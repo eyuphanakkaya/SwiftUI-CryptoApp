@@ -22,7 +22,7 @@ struct RegisterPageDesign: View {
     @State private var alertsTitle = "Hata"
     @State private var alertsMessage = ""
     @State var usersControlList = [String]()
-    @State var ref: DatabaseReference?
+  
     var body: some View {
         VStack{
             HStack {
@@ -179,13 +179,13 @@ struct RegisterPageDesign: View {
                     alertsTitle = "Mail"
                     alertsMessage = "Lütfen mail formatını düzgün giriniz."
                 } else {
-                    checkIfEmailExists(email: registerMail) { result in
+                    viewModel.checkIfEmailExists(email: registerMail) { result in
                         if result {
                             showToAlerts = true
                             alertsTitle = "Hata"
                             alertsMessage = "Bu mail adresi mevcut lütfen farklı bir adres giriniz."
                         } else {
-                            saveUser(name: registerName, surname: registerSurname, password: registerPassword, repeatPassword: registerRepaetPassword, mail: registerMail)
+                            viewModel.saveUser(name: registerName, surname: registerSurname, password: registerPassword, repeatPassword: registerRepaetPassword, mail: registerMail)
                             showToAlerts = true
                             alertsTitle = "Başarılı"
                             alertsMessage = "Kayıt başarıyla oluşturuldu."
@@ -215,38 +215,11 @@ struct RegisterPageDesign: View {
             .frame(width: 345,height: 16)
             .font(.system(size: 12))
         }.onAppear{
-            ref = Database.database().reference()
+            viewModel.ref = Database.database().reference()
             
         }
     }
 
-    func saveUser(name: String,surname: String,password: String,repeatPassword: String,mail: String){
-        saveAuthUser(mail: mail, password: password)
-        let dict:[String:Any] = ["name":name,"surname":surname,"password":password,"repeat_password":repeatPassword,"mail":mail]
-        let newRef = ref?.child("users").childByAutoId()
-        newRef?.setValue(dict)
-        
-    }
-    func saveAuthUser(mail: String,password: String) {
-        Auth.auth().createUser(withEmail: mail, password: password) { result, error in
-            if error != nil {
-                print(error)
-            } else {
-                print("Kayit olusturuldu")
-            }
-        }
-    }
-
-    func checkIfEmailExists(email: String, completion: @escaping (Bool) -> Void) {
-       
-        ref?.child("users").queryOrdered(byChild: "mail").queryEqual(toValue: email).observeSingleEvent(of: .value) { snapshot in
-            if snapshot.exists() {
-                completion(true)
-            } else {
-                completion(false)
-            }
-        }
-    }
     
 }
 

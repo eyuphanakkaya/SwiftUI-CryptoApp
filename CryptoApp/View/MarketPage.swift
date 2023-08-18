@@ -78,12 +78,15 @@ struct MarketPage: View {
 
                             
                         }
+               
                         .background(Color("background"))
                     } else {
                         VStack{
                                 ForEach(searchResult.prefix(10),id: \.hashValue) { list in
                                     ForEach(viewModel.myList.prefix(10)) { liste in
-                                        SearchPage(coin: list,coinModel: liste)
+                                        NavigationLink(destination: DetailPage(viewModel: viewModel,coin: liste, fav: false)) {
+                                            SearchPage(coin: list,coinModel: liste)
+                                        }
                                     }
                             }
                         }
